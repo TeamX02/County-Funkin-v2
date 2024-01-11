@@ -5,7 +5,6 @@ import openfl.geom.Rectangle;
 import flixel.FlxCamera;
 import flixel.addons.display.shapes.FlxShapeLine;
 import flixel.util.FlxSpriteUtil;
-import sys.io.File;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
@@ -43,7 +42,7 @@ class BarVisualizer extends FlxSpriteGroup {
 		super(X, Y);
 		originalY = Y;
 
-		spectrumData = File.getContent(spectrumFile);
+		spectrumData = openfl.utils.Assets.getText(spectrumFile);
 		var xVal = X;
 		for (i in 0...barAmount + 1)
 		{
