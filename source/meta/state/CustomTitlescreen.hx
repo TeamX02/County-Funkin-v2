@@ -68,11 +68,6 @@ class CustomTitlescreen extends MusicBeatState
 	{
 		if (!initialized)
 		{
-			///*
-			#if DISCORD_RPC
-			Discord.changePresence('TITLE SCREEN', 'Main Menu');
-			#end
-
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
 			diamond.persist = true;
 			diamond.destroyOnNoUse = false;
