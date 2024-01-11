@@ -109,7 +109,11 @@ class StoryMenuState extends MusicBeatState
 		var vhsinfo = new VHSInfo();
 		vhsinfo.camera = camINFO;
 		add(vhsinfo);
-
+   
+                #if android
+                addVirtualPad(LEFT_RIGHT, A_B);
+		#end
+		
 		switchSong(0);
 	}
 
