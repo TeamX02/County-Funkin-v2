@@ -362,6 +362,11 @@ class PlayState extends MusicBeatState
 		dialogueHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(dialogueHUD, false);
 
+		#if android
+		addAndroidControls();
+		androidControls.visible = true;
+		#end
+
 		//
 		keysArray = [
 			copyKey(Init.gameControls.get('LEFT')[0]),
@@ -674,10 +679,6 @@ class PlayState extends MusicBeatState
 				for (hud in PlayState.instance.allUIs)
 					hud.visible = false;
 				openSubState(new GameOverSubstate());
-
-				#if DISCORD_RPC
-				Discord.changePresence("Game Over - " + songDetails, detailsSub, iconRPC);
-				#end
 			}
 
 			// spawn in the notes from the array
@@ -724,7 +725,40 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
+        function controllerInput()
+	{
+		var justPressArray:Array<Bool> = [
+			controls.LEFT_P,
+			controls.DOWN_P,
+			controls.UP_P,
+			controls.RIGHT_P
+		];
 
+		var justReleaseArray:Array<Bool> = [
+			controls.LEFT_R,
+			controls.DOWN_R,
+			controls.UP_R,
+			controls.RIGHT_R
+		];
+
+		if (justPressArray.contains(true))
+		{
+			for (i in 0...justPressArray.length)
+			{
+				if (justPressArray[i])
+					onKeyPress(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, true, -1, keysArray[i][0]));
+			}
+		}
+
+		if (justReleaseArray.contains(true))
+		{
+			for (i in 0...justReleaseArray.length)
+			{
+				if (justReleaseArray[i])
+					onKeyRelease(new KeyboardEvent(KeyboardEvent.KEY_UP, true, true, -1, keysArray[i][0]));
+			}
+		}
+	}
 	function noteCalls()
 	{
 		// reset strums
@@ -1185,7 +1219,7 @@ class PlayState extends MusicBeatState
 
 	public static function updateRPC(pausedRPC:Bool)
 	{
-		#if DISCORD_RPC
+		#if desktop 
 		var displayRPC:String = (pausedRPC) ? detailsPausedText : songDetails;
 
 		if (health > 0)
