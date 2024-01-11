@@ -103,7 +103,7 @@ class DialogueBox extends FlxSpriteGroup
 		var truePath = Paths.file(file);
 
 		// load the json file
-		if (sys.FileSystem.exists(dialoguePath))
+		if (opemfl.utils.Assets.exists(dialoguePath))
 			return dialoguePath;
 		else
 			return truePath;
@@ -230,7 +230,7 @@ class DialogueBox extends FlxSpriteGroup
 			var boxJson = Paths.file('images/dialogue/boxes/$curBox/$curBox.json');
 
 			// load the json and sprite
-			boxData = haxe.Json.parse(sys.io.File.getContent(boxJson));
+			boxData = haxe.Json.parse(openfl.utils.Assets.getText(boxJson));
 			box.frames = Paths.getSparrowAtlas('dialogue/boxes/$curBox/$curBox');
 
 			// get the states sectioon
@@ -316,9 +316,9 @@ class DialogueBox extends FlxSpriteGroup
 				var portraitJson = Paths.file('images/dialogue/portraits/$curCharacter/$curCharacter.json');
 
 				// load the json file
-				if (sys.FileSystem.exists(portraitJson))
+				if (openfl.utils.Assets.exists(portraitJson))
 				{
-					portraitData = haxe.Json.parse(sys.io.File.getContent(portraitJson));
+					portraitData = haxe.Json.parse(openfl.utils.Assets.getText(portraitJson));
 					portrait.frames = Paths.getSparrowAtlas('dialogue/portraits/$curCharacter/$curCharacter');
 				}
 
