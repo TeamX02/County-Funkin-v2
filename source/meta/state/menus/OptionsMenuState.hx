@@ -51,10 +51,6 @@ class OptionsMenuState extends MusicBeatState
 
 		// NOTE : Make sure to check Init.hx if you are trying to add options.
 
-		#if DISCORD_RPC
-		Discord.changePresence('OPTIONS MENU', 'Main Menu');
-		#end
-
 		instance = this;
 
 		var camMAIN = new FlxCamera();
@@ -162,6 +158,10 @@ class OptionsMenuState extends MusicBeatState
 		vhsinfo = new VHSInfo();
 		vhsinfo.camera = camINFO;
 		add(vhsinfo);
+
+		#if android
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
 	}
 
 	private var currentAttachmentMap:Map<Alphabet, Dynamic>;
@@ -597,6 +597,26 @@ class OptionsMenuState extends MusicBeatState
 			});
 		}
 	}
+
+	#if android
+	public function openAndroidControlmenu()
+	{
+		if (controls.ACCEPT)
+		{
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+			lockedMovement = true;
+			FlxFlicker.flicker(activeSubgroup.members[curSelection], 0.5, 0.06 * 2, true, false, function(flick:FlxFlicker)
+			{
+				
+				#if android
+				removeVirtualPad();
+				#end
+				openSubState(new android.AndroidControlsSubState());
+				lockedMovement = false;
+			});
+		}
+	}
+	#end
 
 	public function exitMenu()
 	{
