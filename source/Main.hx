@@ -26,9 +26,8 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.events.UncaughtErrorEvent;
-import sys.FileSystem;
-import sys.io.File;
-import sys.io.Process;
+import openfl.utils.Assets;
+import lime.system.Syetem;
 
 typedef CrashContent = {
 	var content:String;
@@ -47,6 +46,8 @@ class Main extends Sprite
 	public static var framerate:Int = 120; // How many frames per second the game should run at.
 
 	public static var gameVersion:String = '0.3.1';
+
+	public static var ata:String = System.applicationStorageDirectory;
 
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
@@ -106,10 +107,6 @@ class Main extends Sprite
 		// addChild(new FPS(10, 3, 0xFFFFFF));
 
 		// begin the discord rich presence
-		#if DISCORD_RPC
-		Discord.initializeRPC();
-		Discord.changePresence('');
-		#end
 
 		// test initialising the player settings
 		PlayerSettings.init();
@@ -183,13 +180,12 @@ class Main extends Sprite
 			content: "```hx\n" + msg + "\n```"
 		}
 
-		var http = new Http("");
+		var http = new Http(""); // não faço ideia se isso funciona bo Android mas ta 
 		http.setHeader("Content-Type", "application/json");
 		http.setPostData(Json.stringify(parsedLog));
 		http.request(true);
 
 		Application.current.window.alert("Something went wrong!\n\nA report has been automatically sent into the County Funkin' development server.\n\nYou may also send a bug report via the County Funkin' twitter account.", "County Farted and Shat Itself");
-		Discord.shutdownRPC();
 		Sys.exit(1);
 	}
 }
