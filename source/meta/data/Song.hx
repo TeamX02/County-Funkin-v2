@@ -4,8 +4,6 @@ import haxe.Json;
 import haxe.format.JsonParser;
 import lime.utils.Assets;
 import meta.data.Section.SwagSection;
-import sys.io.File;
-
 using StringTools;
 
 typedef SwagSong =
@@ -44,7 +42,7 @@ class Song
 
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
-		var rawJson = File.getContent(Paths.songJson(folder.toLowerCase(), jsonInput.toLowerCase())).trim();
+		var rawJson = openfl.utils.Assets.getText(Paths.songJson(folder.toLowerCase(), jsonInput.toLowerCase())).trim();
 
 		while (!rawJson.endsWith("}"))
 			rawJson = rawJson.substr(0, rawJson.length - 1);
