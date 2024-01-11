@@ -5,10 +5,6 @@ import meta.state.PlayState;
 
 using StringTools;
 
-#if sys
-import sys.FileSystem;
-#end
-
 class CoolUtil
 {
 	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
@@ -64,7 +60,7 @@ class CoolUtil
 		var libraryArray:Array<String> = [];
 
 		#if sys
-		var unfilteredLibrary = FileSystem.readDirectory('$subDir/$library');
+		var unfilteredLibrary = HSys.readDirectory('$subDir/$library');
 
 		for (folder in unfilteredLibrary)
 		{
